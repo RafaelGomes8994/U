@@ -5,7 +5,7 @@ module ALU_bit_slice (
     output reg R
 );
 
-    wire sum, sub, and_out, or_out, xor_out, not_a, not_b, pass_a;;
+    wire sum, sub, and_out, or_out, xnor_out, not_a, not_b, pass_a;;
     wire add_cout, sub_cout;
 
     // Soma
@@ -39,10 +39,10 @@ module ALU_bit_slice (
         .R(or_out)
     );
 
-    XOR_gate XOR1 (
+    XNOR_gate XNOR1 (
         .A(A),
         .B(B),
-        .R(xor_out)
+        .R(xnor_out)
     );
 
     NOT_gate NOT1 (
@@ -82,7 +82,7 @@ module ALU_bit_slice (
             cout_internal = 1'b0; // Não gera carry
         end
         3'b100: begin
-            R = xor_out; // XOR
+            R = xnor_out; // XOR
             cout_internal = 1'b0; // Não gera carry
         end
         3'b101: begin

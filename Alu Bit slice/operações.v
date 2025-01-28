@@ -25,7 +25,6 @@ module Subtractor (
    
 endmodule
 
-
 module AND_gate (
     input A, B,
     output R
@@ -40,11 +39,11 @@ module OR_gate (
     or (R, A, B);
 endmodule
 
-module XOR_gate (
+module XNOR_gate (
     input A, B,
     output R
 );
-    xor (R, A, B);
+    xnor (R, A, B);
 endmodule
 
 module NOT_gate (

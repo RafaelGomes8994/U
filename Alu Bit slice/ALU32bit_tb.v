@@ -35,7 +35,7 @@ module ALU32bit_tb;
             end
             3'b001: begin
                 expected_result = A - B;
-                expected_cout = A <= B | B > A ? 1 : 0;
+                expected_cout =  B > A ? 1 : 0;
             end
             3'b010: begin
                 expected_result = A & B;
@@ -46,7 +46,7 @@ module ALU32bit_tb;
                 expected_cout = 0;
             end
             3'b100: begin
-                expected_result = A ^ B;
+                expected_result = ~(A ^ B);
                 expected_cout = 0;
             end
             3'b101: begin
@@ -81,7 +81,7 @@ module ALU32bit_tb;
     integer i; // Iterador local
     initial begin
         $display("** Testando valores aleatórios **");
-        for (i = 0; i < 5; i = i + 1) begin
+        for (i = 0; i < 20; i = i + 1) begin
             A = $random;
             B = $random;
             for (F = 3'b000; F <= 3'b111; F = F + 1) begin
