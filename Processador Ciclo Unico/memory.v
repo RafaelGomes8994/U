@@ -32,7 +32,7 @@ module InstructionMemory(
     output [31:0] instruction
 );
     reg [31:0] memory [0:255];
-
+    
     initial begin
         // Carregar instruções de exemplo (simulação)
         $readmemh("instructions.mem", memory);
