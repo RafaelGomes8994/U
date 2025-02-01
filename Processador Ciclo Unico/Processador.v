@@ -75,5 +75,8 @@ module SingleCycleMIPS(
     );
 
     assign writeReg = RegDst ? instruction[15:11] : instruction[20:16];
-    assign next_pc = (Branch & zero) ? pc + 4 + (sign_ext_imm << 2) : pc + 4;
+    
+    // Lógica para calcular o próximo PC
+    wire [31:0] jump_address = {pc[31:28], instruction[25:0], 2'b00}; // Calcula o endereço de JUMP
+    assign next_pc = Jump ? jump_address : (Branch & zero) ? pc + 4 + (sign_ext_imm << 2) : pc + 4;
 endmodule
