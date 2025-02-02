@@ -18,7 +18,7 @@ module ALU(
     end
 endmodule
 
-// Registradores (Banco de Registradores)
+// Registradores (Banco de Registradores)''
 module Registers(
     input clk,                   // Sinal de clock
     input RegWrite,              // Sinal para habilitar escrita no registrador
