@@ -46,5 +46,6 @@ module SingleCycleMIPS_Simulation;
     initial begin
         $readmemh("instructions.mem", uut.inst_mem.memory);
     end
-
+    
 endmodule
+\end{lstlisting}
