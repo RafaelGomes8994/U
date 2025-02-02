@@ -1,15 +1,18 @@
-// Processador Principal
+// Processador Principal (Single Cycle MIPS)
 module SingleCycleMIPS(
-    input clk, rst
+    input clk,                   // Sinal de clock
+    input rst                    // Sinal de reset
 );
-    // Fios
+    // Fios (conexões internas)
     wire [31:0] pc, next_pc, instruction, readData1, readData2, alu_result, mem_data, sign_ext_imm;
     wire [4:0] writeReg;
     wire [3:0] alu_control;
     wire zero, RegDst, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch, Jump;
     wire [1:0] ALUOp;
 
-    // Instâncias
+    // Instâncias dos módulos
+
+    // PC (Program Counter)
     PC pc_reg(
         .clk(clk),
         .rst(rst),
@@ -17,11 +20,13 @@ module SingleCycleMIPS(
         .pc(pc)
     );
 
+    // Memória de Instruções
     InstructionMemory inst_mem(
         .address(pc),
         .instruction(instruction)
     );
 
+    // Unidade de Controle
     ControlUnit control(
         .opcode(instruction[31:26]),
         .RegDst(RegDst),
@@ -35,6 +40,7 @@ module SingleCycleMIPS(
         .ALUOp(ALUOp)
     );
 
+    // Banco de Registradores
     Registers reg_file(
         .clk(clk),
         .RegWrite(RegWrite),
@@ -46,17 +52,20 @@ module SingleCycleMIPS(
         .readData2(readData2)
     );
 
+    // Extensão de Sinal
     SignExtend sign_ext(
         .in(instruction[15:0]),
         .out(sign_ext_imm)
     );
 
+    // Controle da ALU
     ALUControl alu_ctrl(
         .ALUOp(ALUOp),
         .funct(instruction[5:0]),
         .alu_control(alu_control)
     );
 
+    // ALU (Unidade Lógica e Aritmética)
     ALU alu(
         .input1(readData1),
         .input2(ALUSrc ? sign_ext_imm : readData2),
@@ -65,6 +74,7 @@ module SingleCycleMIPS(
         .zero(zero)
     );
 
+    // Memória de Dados
     DataMemory data_mem(
         .clk(clk),
         .MemRead(MemRead),
@@ -74,8 +84,9 @@ module SingleCycleMIPS(
         .readData(mem_data)
     );
 
+    // Lógica para selecionar o registrador de escrita
     assign writeReg = RegDst ? instruction[15:11] : instruction[20:16];
-    
+
     // Lógica para calcular o próximo PC
     wire [31:0] jump_address = {pc[31:28], instruction[25:0], 2'b00}; // Calcula o endereço de JUMP
     assign next_pc = Jump ? jump_address : (Branch & zero) ? pc + 4 + (sign_ext_imm << 2) : pc + 4;
