@@ -1,13 +1,19 @@
 // Processador Principal (Single Cycle MIPS)
 module SingleCycleMIPS(
     input clk,                   // Sinal de clock
-    input rst                    // Sinal de reset
+    input rst,                   // Sinal de reset
+    output [31:0] pc,            // Program Counter
+    output [31:0] instruction,   // Instrução atual
+    output RegWrite,             // Sinal de escrita no registrador
+    output ALUSrc,               // Sinal de seleção da fonte do segundo operando da ALU
+    output Branch,               // Sinal de desvio condicional
+    output Jump                  // Sinal de salto incondicional
 );
     // Fios (conexões internas)
-    wire [31:0] pc, next_pc, instruction, readData1, readData2, alu_result, mem_data, sign_ext_imm;
+    wire [31:0] next_pc, readData1, readData2, alu_result, mem_data, sign_ext_imm;
     wire [4:0] writeReg;
     wire [3:0] alu_control;
-    wire zero, RegDst, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch, Jump;
+    wire zero, MemtoReg, MemRead, MemWrite;
     wire [1:0] ALUOp;
 
     // Instâncias dos módulos
