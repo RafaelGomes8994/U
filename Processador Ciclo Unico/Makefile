@@ -1,29 +1,22 @@
-# Variáveis
-IVERILOG = iverilog
-VVP = vvp
-GTKWAVE = gtkwave
-DUT = Processador.v
-EXEC = simulacao.vvp
-VCD = simulacao.vcd
+# Nome do arquivo de saída
+EXE = sim.vvp
 
-# Regras
-.PHONY: all sim run view clean
+# Arquivos Verilog
+SRC = AluAndRegistradores.v UnidadeDeControle.v Processador.v memory.v simulacao.v
 
-# Regra principal
-all: clean sim run view
+# Arquivo de saída VCD
+VCD = Processador.vcd
 
-# Compila o testbench e gera o executável da simulação
-sim: $(DUT)
-	$(IVERILOG) -o $(EXEC) $(DUT)
+all: compile run view
 
-# Executa a simulação para gerar o arquivo .vcd
-run: $(EXEC)
-	./$(EXEC)
+compile:
+	iverilog -o $(EXE) $(SRC)
 
-# Abre o GTKWave para visualizar o arquivo .vcd
-view: $(VCD)
-	$(GTKWAVE) $(VCD)
+run:
+	vvp $(EXE)
 
-# Limpa os arquivos gerados
+view:
+	gtkwave $(VCD)
+
 clean:
-	rm -f $(EXEC) $(VCD)
+	cmd /c del /F /Q $(EXE) $(VCD) 2>nul
