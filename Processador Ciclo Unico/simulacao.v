@@ -9,11 +9,18 @@ module SingleCycleMIPS_Simulation;
     // Fios de saída do processador
     wire [31:0] pc;
     wire [31:0] instruction;
+    wire RegWrite, ALUSrc, Branch, Jump;
 
     // Instância do processador
     SingleCycleMIPS uut (
         .clk(clk),
-        .rst(rst)
+        .rst(rst),
+        .pc(pc),
+        .instruction(instruction),
+        .RegWrite(RegWrite),
+        .ALUSrc(ALUSrc),
+        .Branch(Branch),
+        .Jump(Jump)
     );
 
     // Gerador de clock
@@ -60,39 +67,44 @@ module SingleCycleMIPS_Simulation;
         // Finaliza a simulação
         $finish;
     end
-initial begin
-    $monitor("Tempo: %0d | PC: %h | Instrução: %h | RegWrite: %b | ALUSrc: %b | Branch: %b | Jump: %b", 
-             $time, 
-             pc, 
-             instruction,
-             RegWrite,
-             ALUSrc,
-             Branch,
-             Jump);
-end
-initial begin
-    $monitor("Tempo: %0d | $t0: %h | $t1: %h | $t2: %h | $t3: %h | $t7: %h | $t8: %h | $t9: %h | $s0: %h | $s1: %h", 
-             $time, 
-             reg_file.regFile[8],  // $t0
-             reg_file.regFile[9],  // $t1
-             reg_file.regFile[10], // $t2
-             reg_file.regFile[11], // $t3
-             reg_file.regFile[15], // $t7
-             reg_file.regFile[24], // $t8
-             reg_file.regFile[25], // $t9
-             reg_file.regFile[16], // $s0
-             reg_file.regFile[17]  // $s1
-            );
-end
-initial begin
-    $dumpfile("Processador.vcd");
-    $dumpvars(0, Processador);
-end
-initial begin
-    $monitor("Tempo: %0d | Mem[0x10010010]: %h", 
-             $time, 
-             data_mem.memory[16]); // Endereço 0x10010010
-end
+
+    initial begin
+        $monitor("Tempo: %0d | PC: %h | Instrução: %h | RegWrite: %b | ALUSrc: %b | Branch: %b | Jump: %b", 
+                 $time, 
+                 pc, 
+                 instruction,
+                 RegWrite,
+                 ALUSrc,
+                 Branch,
+                 Jump);
+    end
+
+    initial begin
+        $monitor("Tempo: %0d | $t0: %h | $t1: %h | $t2: %h | $t3: %h | $t7: %h | $t8: %h | $t9: %h | $s0: %h | $s1: %h", 
+                 $time, 
+                 uut.reg_file.regFile[8],  // $t0
+                 uut.reg_file.regFile[9],  // $t1
+                 uut.reg_file.regFile[10], // $t2
+                 uut.reg_file.regFile[11], // $t3
+                 uut.reg_file.regFile[15], // $t7
+                 uut.reg_file.regFile[24], // $t8
+                 uut.reg_file.regFile[25], // $t9
+                 uut.reg_file.regFile[16], // $s0
+                 uut.reg_file.regFile[17]  // $s1
+                );
+    end
+
+    initial begin
+        $dumpfile("Processador.vcd");
+        $dumpvars(0, uut);
+    end
+
+    initial begin
+        $monitor("Tempo: %0d | Mem[0x10010010]: %h", 
+                 $time, 
+                 uut.data_mem.memory[16]); // Endereço 0x10010010
+    end
+
     // Carregar instruções no arquivo de memória
     initial begin
         $readmemh("Teste.mem", uut.inst_mem.memory);
