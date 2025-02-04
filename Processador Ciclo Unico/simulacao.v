@@ -95,20 +95,12 @@ module SingleCycleMIPS_Simulation;
     end
 
     initial begin
-        $dumpfile("Processador.vcd");
-        $dumpvars(0, uut);
-    end
-
-    initial begin
         $monitor("Tempo: %0d | Mem[0x10010010]: %h", 
                  $time, 
                  uut.data_mem.memory[16]); // Endereço 0x10010010
     end
-
-    // Carregar instruções no arquivo de memória
     initial begin
         $readmemh("Teste.mem", uut.inst_mem.memory);
         $display("Arquivo Teste.mem carregado com sucesso!");
     end
-
 endmodule
