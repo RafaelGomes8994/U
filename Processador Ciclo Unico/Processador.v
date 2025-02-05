@@ -47,7 +47,7 @@ module SingleCycleMIPS(
     );
 
     // Banco de Registradores
-    Registers reg_file(
+    Registradores reg_file(
         .clk(clk),
         .RegWrite(RegWrite),
         .readReg1(instruction[25:21]),

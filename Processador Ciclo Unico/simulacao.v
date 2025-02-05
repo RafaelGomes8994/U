@@ -99,11 +99,8 @@ module SingleCycleMIPS_Simulation;
                  $time, 
                  uut.data_mem.memory[16]); // Endereço 0x10010010
     end
-
-    // Carregar instruções no arquivo de memória
     initial begin
         $readmemh("Teste.mem", uut.inst_mem.memory);
         $display("Arquivo Teste.mem carregado com sucesso!");
     end
-
 endmodule
