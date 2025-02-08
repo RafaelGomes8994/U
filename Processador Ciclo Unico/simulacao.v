@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module SingleCycleMIPS_Simulation;
+module simulacao;
 
     // Entradas da simulação
     reg clk;
@@ -17,7 +17,7 @@ module SingleCycleMIPS_Simulation;
     integer iterator2;
 
     // Instância do processador
-    SingleCycleMIPS uut (
+    Processador uut (
         .clk(clk),
         .rst(rst),
         .pc(pc),
@@ -36,7 +36,7 @@ module SingleCycleMIPS_Simulation;
         #10; // Espera 10 ns
         rst = 0;
 
-        $dumpfile("Processador.vcd");
+        $dumpfile("Processador_tb.vcd");
         $dumpvars();
 
         for (iterator2 = 0; iterator2 < 32; iterator2 = iterator2 + 1) begin
@@ -90,7 +90,7 @@ module SingleCycleMIPS_Simulation;
 
     always @(posedge clk) begin
         for (iterator = 0; iterator < 32; iterator = iterator + 1) begin
-            regBankState[iterator] = SingleCycleMIPS_Simulation.uut.reg_file.regFile[iterator];
+            regBankState[iterator] = simulacao.uut.reg_file.regFile[iterator];
         end
     end
 endmodule

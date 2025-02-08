@@ -1,5 +1,5 @@
 // Processador Principal (Single Cycle MIPS)
-module SingleCycleMIPS(
+module Processador(
     input clk,                   // Sinal de clock
     input rst,                   // Sinal de reset
     output [31:0] pc,            // Program Counter

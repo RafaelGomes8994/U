@@ -1,5 +1,5 @@
 $date
-	Sat Feb  8 13:56:14 2025
+	Sat Feb 08 14:57:11 2025
 $end
 $version
 	Icarus Verilog
@@ -7,7 +7,7 @@ $end
 $timescale
 	1ps
 $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var wire 32 ! pc [31:0] $end
 $var wire 32 " instruction [31:0] $end
 $var wire 1 # RegWrite $end
@@ -101,100 +101,100 @@ $var wire 32 T out [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 U \regBankState[0] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 V \regBankState[1] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 W \regBankState[2] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 X \regBankState[3] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 Y \regBankState[4] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 Z \regBankState[5] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 [ \regBankState[6] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 \ \regBankState[7] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 ] \regBankState[8] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 ^ \regBankState[9] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 _ \regBankState[10] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 ` \regBankState[11] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 a \regBankState[12] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 b \regBankState[13] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 c \regBankState[14] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 d \regBankState[15] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 e \regBankState[16] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 f \regBankState[17] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 g \regBankState[18] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 h \regBankState[19] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 i \regBankState[20] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 j \regBankState[21] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 k \regBankState[22] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 l \regBankState[23] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 m \regBankState[24] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 n \regBankState[25] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 o \regBankState[26] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 p \regBankState[27] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 q \regBankState[28] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 r \regBankState[29] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 s \regBankState[30] [31:0] $end
 $upscope $end
-$scope module SingleCycleMIPS_Simulation $end
+$scope module simulacao $end
 $var reg 32 t \regBankState[31] [31:0] $end
 $upscope $end
 $enddefinitions $end
