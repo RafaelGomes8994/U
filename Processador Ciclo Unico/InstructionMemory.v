@@ -4,13 +4,9 @@ module InstructionMemory(
     output [31:0] instruction    // Instrução lida
 );
     reg [31:0] memory [0:255];   // Memória de instruções com 256 posições de 32 bits
-    initial begin
-        // Carregar instruções de exemplo (simulação)
-       $readmemb("Test.mem", memory); // Carrega as instruções de um arquivo
-    end
 
     // Leitura da memória de instruções
-    assign instruction = memory[address[7:0]];
+    assign instruction = memory[address[9:2]];
 endmodule
 
 // Extensão de Sinal

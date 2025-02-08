@@ -23,6 +23,6 @@ module Registradores(
 
     // Escrita no registrador (sincronizada com o clock)
     always @(posedge clk) begin
-        if (RegWrite) regFile[writeReg] <= writeData; // Escreve no registrador se RegWrite estiver ativo
+        if (RegWrite && writeReg != 5'b0) regFile[writeReg] <= writeData; // Escreve no registrador se RegWrite estiver ativo
     end
 endmodule

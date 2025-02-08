@@ -5,10 +5,12 @@ module PC(
     input [31:0] next_pc,        // Próximo valor do PC
     output reg [31:0] pc         // Valor atual do PC
 );
-    always @(posedge clk or posedge rst) begin
+    always @(posedge clk, posedge rst) begin
+
         if (rst)
-            pc <= 0; // Reseta o PC para zero se o sinal de reset estiver ativo
+            pc <= 32'b0; // Reseta o PC para zero se o sinal de reset estiver ativo
         else
-            pc <= next_pc; // Atualiza o PC com o próximo valor
+            pc <= next_pc; // Reseta o PC para zero se o sinal de reset estiver ativo
     end
+    
 endmodule

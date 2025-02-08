@@ -11,6 +11,11 @@ module SingleCycleMIPS_Simulation;
     wire [31:0] instruction;
     wire RegWrite, ALUSrc, Branch, Jump;
 
+    reg [31:0] regBankState [31:0];
+
+    integer iterator;
+    integer iterator2;
+
     // Instância do processador
     SingleCycleMIPS uut (
         .clk(clk),
@@ -25,47 +30,20 @@ module SingleCycleMIPS_Simulation;
 
     // Gerador de clock
     initial begin
-        clk = 0;
-        forever #5 clk = ~clk; // Clock com período de 10 ns
-    end
-
-    // Inicialização e estímulos
-    initial begin
         // Inicializar reset
+        clk = 0;
         rst = 1;
         #10; // Espera 10 ns
         rst = 0;
 
-        // Aguarda a execução do programa
-        #200; 
+        $dumpfile("Processador.vcd");
+        $dumpvars();
 
-        // Verifica os resultados
-        if (uut.reg_file.regFile[8] == 5 && 
-            uut.reg_file.regFile[9] == 10 && 
-            uut.reg_file.regFile[10] == 15 && 
-            uut.reg_file.regFile[11] == 5 && 
-            uut.reg_file.regFile[15] == 2 && 
-            uut.reg_file.regFile[24] == 999 && 
-            uut.reg_file.regFile[25] == 0 && 
-            uut.reg_file.regFile[16] == 15 && 
-            uut.reg_file.regFile[17] == 1) begin
-            $display("Teste passou!");
-        end else begin
-            $display("Teste falhou!");
-            $display("Valores dos registradores:");
-            $display("$t0 (reg[8]): %h", uut.reg_file.regFile[8]);
-            $display("$t1 (reg[9]): %h", uut.reg_file.regFile[9]);
-            $display("$t2 (reg[10]): %h", uut.reg_file.regFile[10]);
-            $display("$t3 (reg[11]): %h", uut.reg_file.regFile[11]);
-            $display("$t7 (reg[15]): %h", uut.reg_file.regFile[15]);
-            $display("$t8 (reg[24]): %h", uut.reg_file.regFile[24]);
-            $display("$t9 (reg[25]): %h", uut.reg_file.regFile[25]);
-            $display("$s0 (reg[16]): %h", uut.reg_file.regFile[16]);
-            $display("$s1 (reg[17]): %h", uut.reg_file.regFile[17]);
+        for (iterator2 = 0; iterator2 < 32; iterator2 = iterator2 + 1) begin
+            $dumpvars(1, regBankState[iterator2]);
         end
-
-        // Finaliza a simulação
-        $finish;
+ 
+        repeat(20) #5 clk = ~clk; // Clock com período de 10 ns
     end
 
     // Monitoramento do PC e da instrução
@@ -105,7 +83,14 @@ module SingleCycleMIPS_Simulation;
 
     // Carregar o arquivo de memória de instruções
     initial begin
-        $readmemb("Teste.mem", uut.inst_mem.memory);
+        $readmemb("Test.mem", uut.inst_mem.memory);
         $display("Arquivo Teste.mem carregado com sucesso!");
+    end
+
+
+    always @(posedge clk) begin
+        for (iterator = 0; iterator < 32; iterator = iterator + 1) begin
+            regBankState[iterator] = SingleCycleMIPS_Simulation.uut.reg_file.regFile[iterator];
+        end
     end
 endmodule

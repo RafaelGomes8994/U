@@ -11,7 +11,7 @@ module ControlUnit(
     output reg Jump,             // Sinal para habilitar o salto incondicional (JUMP)
     output reg [1:0] ALUOp       // Sinal de controle para a ALU
 );
-    always @(*) begin
+    always @(opcode) begin
         case (opcode)
             6'b000000: begin // Instrução do tipo R
                 RegDst = 1;
@@ -72,12 +72,12 @@ module ControlUnit(
                 RegDst = 0;
                 ALUSrc = 1;
                 MemtoReg = 0;
-                RegWrite = 0;
+                RegWrite = 1;
                 MemRead = 0;
                 MemWrite = 0;
                 Branch = 0;
                 Jump = 0;
-                ALUOp = 2'b10;
+                ALUOp = 2'b00;
             end
             default: begin // Caso padrão
                 RegDst = 0;
