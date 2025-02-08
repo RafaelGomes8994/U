@@ -2,7 +2,7 @@
 EXE = sim.vvp
 
 # Arquivos Verilog
-SRC = AluControl.v Alu.v Registradores.v ControlUnit.v Processador.v InstructionMemory.v Pc.v DataMemory.v simulacao.v
+SRC = AluControl.v Alu.v Registradores.v ControlUnit.v Processador.v InstructionMemory.v Pc.v DataMemory.v simulacao.v Mux2to1.v
 
 # Arquivo de saída VCD
 VCD = Processador.vcd
