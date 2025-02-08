@@ -53,7 +53,7 @@ module SingleCycleMIPS(
         .readReg1(instruction[25:21]),
         .readReg2(instruction[20:16]),
         .writeReg(writeReg),
-        .writeData(mem_data),
+        .writeData((MemtoReg) ? mem_data : alu_result),
         .readData1(readData1),
         .readData2(readData2)
     );
