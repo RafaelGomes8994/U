@@ -68,6 +68,17 @@ module ControlUnit(
                 Jump = 1;
                 ALUOp = 2'b00;
             end
+            6'b001000: begin // addi
+                RegDst = 0;
+                ALUSrc = 1;
+                MemtoReg = 0;
+                RegWrite = 0;
+                MemRead = 0;
+                MemWrite = 0;
+                Branch = 0;
+                Jump = 0;
+                ALUOp = 2'b10;
+            end
             default: begin // Caso padrão
                 RegDst = 0;
                 ALUSrc = 0;
