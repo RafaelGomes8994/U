@@ -9,11 +9,18 @@ module SingleCycleMIPS_Simulation;
     // Fios de saída do processador
     wire [31:0] pc;
     wire [31:0] instruction;
+    wire RegWrite, ALUSrc, Branch, Jump;
 
-    // Instância da memória de instruções
-    InstructionMemory inst_mem (
-        .address(pc),
-        .instruction(instruction)
+    // Instância do processador
+    SingleCycleMIPS uut (
+        .clk(clk),
+        .rst(rst),
+        .pc(pc),
+        .instruction(instruction),
+        .RegWrite(RegWrite),
+        .ALUSrc(ALUSrc),
+        .Branch(Branch),
+        .Jump(Jump)
     );
 
     // Gerador de clock
@@ -29,12 +36,33 @@ module SingleCycleMIPS_Simulation;
         #10; // Espera 10 ns
         rst = 0;
 
-        // Aguarda a execução das 3 instruções
-        #60; // 6 ciclos de clock (3 instruções x 2 ciclos por instrução)
+        // Aguarda a execução do programa
+        #200; 
 
         // Verifica os resultados
-        $display("Simulação concluída.");
-        $display("Valor final do PC: %h", pc);
+        if (uut.reg_file.regFile[8] == 5 && 
+            uut.reg_file.regFile[9] == 10 && 
+            uut.reg_file.regFile[10] == 15 && 
+            uut.reg_file.regFile[11] == 5 && 
+            uut.reg_file.regFile[15] == 2 && 
+            uut.reg_file.regFile[24] == 999 && 
+            uut.reg_file.regFile[25] == 0 && 
+            uut.reg_file.regFile[16] == 15 && 
+            uut.reg_file.regFile[17] == 1) begin
+            $display("Teste passou!");
+        end else begin
+            $display("Teste falhou!");
+            $display("Valores dos registradores:");
+            $display("$t0 (reg[8]): %h", uut.reg_file.regFile[8]);
+            $display("$t1 (reg[9]): %h", uut.reg_file.regFile[9]);
+            $display("$t2 (reg[10]): %h", uut.reg_file.regFile[10]);
+            $display("$t3 (reg[11]): %h", uut.reg_file.regFile[11]);
+            $display("$t7 (reg[15]): %h", uut.reg_file.regFile[15]);
+            $display("$t8 (reg[24]): %h", uut.reg_file.regFile[24]);
+            $display("$t9 (reg[25]): %h", uut.reg_file.regFile[25]);
+            $display("$s0 (reg[16]): %h", uut.reg_file.regFile[16]);
+            $display("$s1 (reg[17]): %h", uut.reg_file.regFile[17]);
+        end
 
         // Finaliza a simulação
         $finish;
@@ -42,22 +70,42 @@ module SingleCycleMIPS_Simulation;
 
     // Monitoramento do PC e da instrução
     initial begin
-        $monitor("Tempo: %0d | PC: %h | Instrução: %h", 
+        $monitor("Tempo: %0d | PC: %h | Instrução: %h | RegWrite: %b | ALUSrc: %b | Branch: %b | Jump: %b", 
                  $time, 
                  pc, 
-                 instruction);
+                 instruction,
+                 RegWrite,
+                 ALUSrc,
+                 Branch,
+                 Jump);
     end
 
-    // Instância do PC (Program Counter)
-    reg [31:0] pc_reg;
-    assign pc = pc_reg;
+    // Monitoramento dos registradores
+    initial begin
+        $monitor("Tempo: %0d | $t0: %h | $t1: %h | $t2: %h | $t3: %h | $t7: %h | $t8: %h | $t9: %h | $s0: %h | $s1: %h", 
+                 $time, 
+                 uut.reg_file.regFile[8],  // $t0
+                 uut.reg_file.regFile[9],  // $t1
+                 uut.reg_file.regFile[10], // $t2
+                 uut.reg_file.regFile[11], // $t3
+                 uut.reg_file.regFile[15], // $t7
+                 uut.reg_file.regFile[24], // $t8
+                 uut.reg_file.regFile[25], // $t9
+                 uut.reg_file.regFile[16], // $s0
+                 uut.reg_file.regFile[17]  // $s1
+                );
+    end
 
-    // Lógica do PC
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            pc_reg <= 32'b0; // Reset do PC
-        end else begin
-            pc_reg <= pc_reg + 4; // Incrementa o PC em 4 a cada ciclo
-        end
+    // Monitoramento da memória
+    initial begin
+        $monitor("Tempo: %0d | Mem[0x10010010]: %h", 
+                 $time, 
+                 uut.data_mem.memory[16]); // Endereço 0x10010010
+    end
+
+    // Carregar o arquivo de memória de instruções
+    initial begin
+        $readmemb("Teste.mem", uut.inst_mem.memory);
+        $display("Arquivo Teste.mem carregado com sucesso!");
     end
 endmodule
